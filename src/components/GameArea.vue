@@ -8,6 +8,7 @@
             <option value="ThreeSelectGame">가위바위보</option>
             <option value="LottoBallGame">로또</option>
             <option value="TicTacToe">틱택토</option>
+            <option value="MineSweeper">지뢰찾기</option>
         </select>
     </div>
     <div>
@@ -19,11 +20,13 @@
 import ThreeSelectGame from './games/ThreeSelectGame.vue';
 import LottoBallGame from './games/LottoBallGame.vue';
 import TicTacToe from './games/TicTacToe.vue';
+import MineSweeper from './games/MineSweeper.vue';
 export default {
     components: {
         ThreeSelectGame,
         LottoBallGame,
         TicTacToe,
+        MineSweeper,
     },
     data() {
         return {
