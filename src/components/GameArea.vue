@@ -13,7 +13,7 @@
     </div>
     <div>
         <h1>{{selectedGame}}</h1>
-        <component v-bind:is="selectedGame"></component>
+        <component :is="selectedGame"></component>
     </div>
 </template>
 <script>

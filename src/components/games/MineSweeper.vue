@@ -37,30 +37,33 @@ export default {
         }
     },
     mounted() {
-        this.readyMining;
+        this.$store.commit['changeMineState', 'ready'];
         this.minesMap = [];
         // this.minesMap = [['',''],['','']]
     },
     computed: {
         ...mapState(['mineState']),
-        ...mapMutations(['ongoingMining', 'readyMining']),
+        // ...mapMutations(['ongoingMining', 'readyMining']),
         minMines() {
             return Math.min(this.setting.row, this.setting.cell);
         },
         maxMines() {
             return this.setting.row * this.setting.cell;
-        },
+        }
     },
     methods: {
         setMinesMap() {
             console.log(this.setting)
             console.log(this.mineState)
+            console.log(this.$store)
+            console.log(this.$store.state)
+            console.log(this.$store.state.mineState)
             this.setting.row = Number(document.querySelector('#row').value);
             this.setting.cell = Number(document.querySelector('#cell').value);
             this.setting.mines = Number(document.querySelector('#mines').value);
         },
         makeMines() {
-            this.ongoingMining;
+            this.$store.commit['changeMineState', 'mining'];
             // this.minesMap = Array.from(Array(this.setting.row), ()=> Array(this.setting.cell));
             let totalMines = this.setting.mines;
             let count = 0;
@@ -68,18 +71,15 @@ export default {
             for (let i=0; i < this.setting.row; i++) {
                 let tmpArray = []
                 for (let j=0; j < this.setting.cell; j++) {
-                    if (Math.random() * (size-count) <= totalMines) {
-                        tmpArray.push({
-                            mine: true,
-                            clear: false,
-                        })
+                    let flag = false;
+                    if (Math.random() * (size-(i*10 + j)) <= totalMines) {
+                        flag = true;
                         totalMines--;
-                    } else {
-                        tmpArray.push({
-                            mine: false,
-                            clear: false,
-                        })
                     }
+                    tmpArray.push({
+                        mine: flag,
+                        clear: false,
+                    })
                     count++;
                 }
                 this.minesMap.push(tmpArray)

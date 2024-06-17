@@ -8,14 +8,12 @@ const store = createStore({
     }
   },
   mutations: {
-    ongoingMining (state) {
-      state.mineState = 'mining'
-    },
-    closeMining (state) {
-      state.mineState = 'closed'
-    },
-    readyMining (state) {
-      state.mineState = 'ready'
+    changeMineState (state, value) {
+      console.log(state, value)
+      if (value != 'mining' || value != 'closed' || value != 'ready') {
+        return;
+      }
+      state.mineState = value;
     },
   }
 })
