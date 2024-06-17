@@ -6,17 +6,23 @@
                 :class="!mines.clear ? '' : mines.mine ? 'mine' : 'safe'">
                     {{ mines.mine }}
                     {{ mines.clear }}
+                    {{ mines.install }}
                 </td>
             </tr>
         </table>
     </div>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex'
 
 export default {
-    props: {
-        minesMap: Array
+    data() {
+        return {
+        }
     },
+    computed: {
+        ...mapState(['mineState', 'minesMap']),
+    }
 }
 </script>
 

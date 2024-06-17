@@ -11,7 +11,7 @@
         </form>
         <template v-else-if="mineState=='mining'">
             <div> 지뢰찾기 {{ time }} 초 째 </div>
-            <MineTable :minesMap="minesMap" />
+            <MineTable />
         </template>
     </div>
 </template>
@@ -26,8 +26,8 @@ export default {
     data() {
         return {
             minesMap: [],
-            minMines:0,
-            maxMines:0,
+            // minMines:0,
+            // maxMines:0,
             setting:{
                 row:10,
                 cell:10,
@@ -53,9 +53,6 @@ export default {
     },
     methods: {
         setMinesMap() {
-            console.log(this.setting)
-            console.log(this.mineState)
-            console.log(this.$store)
             console.log(this.$store.state)
             console.log(this.$store.state.mineState)
             this.setting.row = Number(document.querySelector('#row').value);
@@ -63,31 +60,32 @@ export default {
             this.setting.mines = Number(document.querySelector('#mines').value);
         },
         makeMines() {
-            this.$store.commit['changeMineState', 'mining'];
-            // this.minesMap = Array.from(Array(this.setting.row), ()=> Array(this.setting.cell));
-            let totalMines = this.setting.mines;
-            let count = 0;
-            const size = this.setting.row * this.setting.cell;
-            for (let i=0; i < this.setting.row; i++) {
-                let tmpArray = []
-                for (let j=0; j < this.setting.cell; j++) {
-                    let flag = false;
-                    if (Math.random() * (size-(i*10 + j)) <= totalMines) {
-                        flag = true;
-                        totalMines--;
-                    }
-                    tmpArray.push({
-                        mine: flag,
-                        clear: false,
-                    })
-                    count++;
-                }
-                this.minesMap.push(tmpArray)
-            }
+            this.$store.commit('changeMineState', 'mining');
+            this.$store.commit('makeMineMaps', this.setting);
+            // // this.minesMap = Array.from(Array(this.setting.row), ()=> Array(this.setting.cell));
+            // let totalMines = this.setting.mines;
+            // let count = 0;
+            // const size = this.setting.row * this.setting.cell;
+            // for (let i=0; i < this.setting.row; i++) {
+            //     let tmpArray = []
+            //     for (let j=0; j < this.setting.cell; j++) {
+            //         let flag = false;
+            //         if (Math.random() * (size-(i*10 + j)) <= totalMines) {
+            //             flag = true;
+            //             totalMines--;
+            //         }
+            //         tmpArray.push({
+            //             mine: flag,
+            //             clear: false,
+            //         })
+            //         count++;
+            //     }
+            //     this.minesMap.push(tmpArray)
+            // }
         }
     },
     unmounted() {
-        
+        this.$store.commit('resetMines');
     }
 }
 
